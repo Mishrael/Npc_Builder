@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    username: npcs
+    password: npcs
+    url: jdbc:mysql://localhost:3306/npcs

@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Name {
 private Long namePk;
-private FirstName firstName;
-private Surname surname;
+private String nameId;
+private NameOrigin origin;
 }
