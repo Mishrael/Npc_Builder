@@ -22,22 +22,17 @@ public class DefaultBackgroundDao implements BackgroundDao {
   @Autowired
   private NamedParameterJdbcTemplate jdbcTemplate;
   
-  @Autowired
-  private DefaultProfessionDao defaultProfessionDao;
-  
   @Override
   public List<Background> fetchRandomBackground() {
-    List<Profession> profession = defaultProfessionDao.fetchRandomProfession();
     log.info("DAO: fetching a random background");
     // @formatter:off
-    String sql = "SELECT background_id "
+    String sql = "SELECT * "
         + "FROM backgrounds "
         + "ORDER BY RAND() "
-        + "LIMIT :limit";
+        + "LIMIT 1";
     // @formatter:on
     
     Map<String, Object> params = new HashMap<>();
-    params.put("limit", ThreadLocalRandom.current().nextInt(1, 3));
     return jdbcTemplate.query(sql, params, new RowMapper<>() {
       
       public Background mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -46,8 +41,6 @@ public class DefaultBackgroundDao implements BackgroundDao {
             .backgroundId(rs.getString("background_id"))
             .ethnicity(Ethnicity.valueOf(rs.getString("ethnicity")))
             .status(Status.valueOf(rs.getString("status")))
-            .professions(profession)
-           //add profession fetchRandomProfession somehow
             .build(); 
       }
     });

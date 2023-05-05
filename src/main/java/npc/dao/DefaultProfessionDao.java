@@ -26,14 +26,15 @@ public class DefaultProfessionDao implements ProfessionDao {
   public List<Profession> fetchRandomProfession() {
     log.info("DAO: fetching a random profession");
     // @formatter:off
-    String sql = "SELECT profession_id "
-        + "FROM professions "
-        + "ORDER BY RAND() "
-        + "LIMIT :limit";
+    String sql = "SELECT * FROM ( "
+        + "(SELECT * FROM professions ORDER BY RAND() LIMIT 1) "
+        + "UNION "
+        + "(SELECT * FROM professions ORDER BY RAND() LIMIT 1) "
+        + ") AS combined_result "
+        + "ORDER BY RAND() LIMIT 2; ";
     // @formatter:on
     
     Map<String, Object> params = new HashMap<>();
-    params.put("limit", ThreadLocalRandom.current().nextInt(1, 3));
     return jdbcTemplate.query(sql, params, new RowMapper<>() {
       
       public Profession mapRow(ResultSet rs, int rowNum) throws SQLException {
