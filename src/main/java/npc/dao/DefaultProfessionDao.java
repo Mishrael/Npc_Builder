@@ -21,6 +21,7 @@ public class DefaultProfessionDao implements ProfessionDao {
   @Autowired
   private NamedParameterJdbcTemplate jdbcTemplate;
   
+  
   @Override
   public List<Profession> fetchRandomProfession() {
     log.info("DAO: fetching a random profession");

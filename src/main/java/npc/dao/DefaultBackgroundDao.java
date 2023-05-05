@@ -22,8 +22,12 @@ public class DefaultBackgroundDao implements BackgroundDao {
   @Autowired
   private NamedParameterJdbcTemplate jdbcTemplate;
   
+  @Autowired
+  private DefaultProfessionDao defaultProfessionDao;
+  
   @Override
   public List<Background> fetchRandomBackground() {
+    List<Profession> profession = defaultProfessionDao.fetchRandomProfession();
     log.info("DAO: fetching a random background");
     // @formatter:off
     String sql = "SELECT background_id "
@@ -42,6 +46,7 @@ public class DefaultBackgroundDao implements BackgroundDao {
             .backgroundId(rs.getString("background_id"))
             .ethnicity(Ethnicity.valueOf(rs.getString("ethnicity")))
             .status(Status.valueOf(rs.getString("status")))
+            .professions(profession)
            //add profession fetchRandomProfession somehow
             .build(); 
       }
