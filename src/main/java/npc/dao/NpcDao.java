@@ -18,9 +18,7 @@ public interface NpcDao {
   Background fetchRandomBackground();
   List<Profession> fetchRandomProfession();
   
-  List<Npc> fetchAllNpcs();
-  
-  Npc fetchNpcByPk(int npcPk);
+  List<Npc> fetchNpcByPk(int npcPk);
   
   Npc updateNpcByPk(int npcPk);
   

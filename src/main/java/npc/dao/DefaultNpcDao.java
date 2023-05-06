@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -111,8 +112,7 @@ public class DefaultNpcDao implements NpcDao {
         + "LIMIT 1";
     // @formatter:on
     
-    Map<String, Object> params = new HashMap<>();
-    return (Name) jdbcTemplate.query(sql, params, new RowMapper<>() {
+    return (Name) jdbcTemplate.query(sql, new RowMapper<>() {
       
       public Name mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Name.builder()
@@ -133,8 +133,7 @@ public class DefaultNpcDao implements NpcDao {
            + "LIMIT 1";
        // @formatter:on
        
-       Map<String, Object> params = new HashMap<>();
-       return (Species) jdbcTemplate.query(sql, params, new RowMapper<>() {
+       return (Species) jdbcTemplate.query(sql, new RowMapper<>() {
          
          public Species mapRow(ResultSet rs, int rowNum) throws SQLException {
            return Species.builder()
@@ -155,8 +154,7 @@ public class DefaultNpcDao implements NpcDao {
         + "LIMIT 1";
     // @formatter:on
     
-    Map<String, Object> params = new HashMap<>();
-    return (Personality) jdbcTemplate.query(sql, params, new RowMapper<>() {
+    return (Personality) jdbcTemplate.query(sql, new RowMapper<>() {
       
       public Personality mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Personality.builder()
@@ -178,8 +176,7 @@ public class DefaultNpcDao implements NpcDao {
         + "LIMIT 1";
     // @formatter:on
     
-    Map<String, Object> params = new HashMap<>();
-    return (Background) jdbcTemplate.query(sql, params, new RowMapper<>() {
+    return (Background) jdbcTemplate.query(sql, new RowMapper<>() {
       
       public Background mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Background.builder()
@@ -202,8 +199,7 @@ public class DefaultNpcDao implements NpcDao {
         + "ORDER BY RAND() LIMIT 2; ";
     // @formatter:on
     
-    Map<String, Object> params = new HashMap<>();
-    return jdbcTemplate.query(sql, params, new RowMapper<>() {
+    return jdbcTemplate.query(sql, new RowMapper<>() {
       
       public Profession mapRow(ResultSet rs, int rowNum) throws SQLException {
         // @formatter:off
@@ -215,17 +211,24 @@ public class DefaultNpcDao implements NpcDao {
       }
       });
   }
-  
-  @Override
-  public List<Npc> fetchAllNpcs() {
-    // TODO Auto-generated method stub
-    return null;
-  }
 
   @Override
-  public Npc fetchNpcByPk(int npcPk) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Npc> fetchNpcByPk(int npcPk) {
+    String sql = ""
+        + "SELECT * "
+        + "From npcs "
+        + "Where npc_pk = :npc_pk";
+    
+    Map<String, Object> params = new HashMap<>();
+    params.put("npc_pk", npcPk);
+    
+    return jdbcTemplate.query(sql, params, new RowMapper<>() {
+      public Npc mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return Npc.builder()
+            .npcPk(rs.getLong(npcPk))
+            .build();
+      }
+    });
   }
 
   @Override
