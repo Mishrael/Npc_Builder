@@ -11,7 +11,8 @@ CREATE TABLE names (
   name_pk int unsigned NOT NULL AUTO_INCREMENT,
   name_id varchar(16) NOT NULL,
   name_origin enum('MOD_ENG', 'MID_ENG', 'OLD_ENG', 'NORSE', 'ARABIC'),
-  PRIMARY KEY (name_pk)
+  PRIMARY KEY (name_pk),
+  UNIQUE KEY (name_id)
 );
 
 CREATE TABLE species (

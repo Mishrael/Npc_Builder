@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import npc.entity.Background;
+import npc.entity.BackgroundType;
 import npc.entity.Ethnicity;
 import npc.entity.Profession;
 import npc.entity.Status;
@@ -38,9 +39,7 @@ public class DefaultBackgroundDao implements BackgroundDao {
       public Background mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Background.builder()
             .backgroundPk(rs.getLong("background_pk"))
-            .backgroundId(rs.getString("background_id"))
-            .ethnicity(Ethnicity.valueOf(rs.getString("ethnicity")))
-            .status(Status.valueOf(rs.getString("status")))
+            .backgroundId(BackgroundType.valueOf(rs.getString("background_id")))
             .build(); 
       }
     });

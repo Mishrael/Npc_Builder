@@ -12,6 +12,12 @@ public interface NpcDao {
   Npc saveRandomNPC(Name name, Species species, Personality personality, 
       Background background, List<Profession> professions);
   
+  Name fetchRandomName();
+  Species fetchRandomSpecies();
+  Personality fetchRandomPersonality();
+  Background fetchRandomBackground();
+  List<Profession> fetchRandomProfession();
+  
   List<Npc> fetchAllNpcs();
   
   Npc fetchNpcByPk(int npcPk);

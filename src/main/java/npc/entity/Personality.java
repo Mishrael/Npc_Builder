@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class Personality {
 private Long personalityPk;
-private PersonalityType personality;
+private PersonalityType personalityId;
 private String traits;
 private String description;
 }

@@ -5,14 +5,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
-import npc.entity.MasteryLevel;
 import npc.entity.Profession;
+import npc.entity.ProfessionType;
 
 @Component
 @Slf4j
@@ -41,12 +40,11 @@ public class DefaultProfessionDao implements ProfessionDao {
         // @formatter:off
         return Profession.builder()
             .professionPk(rs.getLong("profession_pk"))
-            .professionId(rs.getString("profession_id"))
-            .masteryLevel(MasteryLevel.valueOf(rs.getString("mastery_level")))
+            .professionId(ProfessionType.valueOf(rs.getString("profession_id")))
             .build();
         // @formatter:on
       }
-    });
+      });
   }
 
 }

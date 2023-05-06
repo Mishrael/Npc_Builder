@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Species {
 private Long speciesPk;
-private SpeciesType species;
+private SpeciesType speciesId;
 private String description;
 }
