@@ -7,6 +7,5 @@ import lombok.Data;
 @Builder
 public class Profession {
 private Long professionPk;
-private String professionId;
-private MasteryLevel masteryLevel;
+private ProfessionType professionId;
 }

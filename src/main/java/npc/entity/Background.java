@@ -8,8 +8,6 @@ import lombok.Data;
 @Builder
 public class Background {
   private Long backgroundPk;
-  private String backgroundId;
-  private Ethnicity ethnicity;
-  private Status status;
+  private BackgroundType backgroundId;
   private List<Profession> professions;
 }

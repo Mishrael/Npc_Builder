@@ -52,77 +52,37 @@ INSERT INTO personalities (personality_id, traits, description) VALUES ('ISTJ', 
 
 
 -- Professions
--- APPRENTICE
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Carpenter', 'APPRENTICE');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Blacksmith', 'APPRENTICE');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Scribe', 'APPRENTICE');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Baker', 'APPRENTICE');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Weaver', 'APPRENTICE');
--- JOURNEYMAN
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Carpenter', 'JOURNEYMAN');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Blacksmith', 'JOURNEYMAN');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Scribe', 'JOURNEYMAN');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Baker', 'JOURNEYMAN');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Weaver', 'JOURNEYMAN');
--- EXPERT
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Carpenter', 'EXPERT');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Blacksmith', 'EXPERT');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Scribe', 'EXPERT');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Baker', 'EXPERT');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Weaver', 'EXPERT');
--- MASTER
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Carpenter', 'MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Blacksmith', 'MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Scribe', 'MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Baker', 'MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Weaver', 'MASTER');
--- GRAND_MASTER
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Carpenter', 'GRAND_MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Blacksmith', 'GRAND_MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Scribe', 'GRAND_MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Baker', 'GRAND_MASTER');
-INSERT INTO professions (profession_id, mastery_level) VALUES ('Weaver', 'GRAND_MASTER');
+INSERT INTO professions (profession_id) VALUES ('BLACKSMITH');
+INSERT INTO professions (profession_id) VALUES ('BAKER');
+INSERT INTO professions (profession_id) VALUES ('FARMER');
+INSERT INTO professions (profession_id) VALUES ('FISHERMAN');
+INSERT INTO professions (profession_id) VALUES ('HUNTER');
+INSERT INTO professions (profession_id) VALUES ('TRADER');
+INSERT INTO professions (profession_id) VALUES ('MERCHANT');
+INSERT INTO professions (profession_id) VALUES ('MINER');
+INSERT INTO professions (profession_id) VALUES ('CARPENTER');
+INSERT INTO professions (profession_id) VALUES ('PAINTER');
+INSERT INTO professions (profession_id) VALUES ('POTTER');
+INSERT INTO professions (profession_id) VALUES ('TAILOR');
+INSERT INTO professions (profession_id) VALUES ('CHEF');
+INSERT INTO professions (profession_id) VALUES ('BREWER');
+INSERT INTO professions (profession_id) VALUES ('WEAVER');
+INSERT INTO professions (profession_id) VALUES ('ARTIST');
+INSERT INTO professions (profession_id) VALUES ('MUSICIAN');
+INSERT INTO professions (profession_id) VALUES ('ACTOR');
+INSERT INTO professions (profession_id) VALUES ('DOCTOR');
+INSERT INTO professions (profession_id) VALUES ('PRIEST');
 
 
 -- Backgrounds
--- Wealthy
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Soldier', 'EUROPEAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Noble', 'EUROPEAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Guild Artisan', 'EUROPEAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('City Watch', 'ARABIC', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Merchant', 'ARABIC', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Courtier', 'ARABIC', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Folk_Hero', 'SYLVAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Sage', 'SYLVAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Priest', 'SYLVAN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Acolyte', 'DWARVEN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Miner', 'DWARVEN', 'WEALTHY');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Engineer', 'DWARVEN', 'WEALTHY');
+INSERT INTO backgrounds (background_id) VALUES ('ACOLYTE');
+INSERT INTO backgrounds (background_id) VALUES ('CRIMINAL');
+INSERT INTO backgrounds (background_id) VALUES ('FOLK_HERO');
+INSERT INTO backgrounds (background_id) VALUES ('GUILD_ARTISAN');
+INSERT INTO backgrounds (background_id) VALUES ('HERMIT');
+INSERT INTO backgrounds (background_id) VALUES ('NOBLE');
+INSERT INTO backgrounds (background_id) VALUES ('OUTLANDER');
+INSERT INTO backgrounds (background_id) VALUES ('SAGE');
+INSERT INTO backgrounds (background_id) VALUES ('SAILOR');
+INSERT INTO backgrounds (background_id) VALUES ('SOLDIER');
 
--- Middle Class
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Entertainer', 'EUROPEAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Criminal', 'EUROPEAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Sailor', 'EUROPEAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Scholar', 'ARABIC', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Mercenary', 'ARABIC', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Artisan', 'ARABIC', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Hermit', 'SYLVAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Druid', 'SYLVAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Ranger', 'SYLVAN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Barkeep', 'DWARVEN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Blacksmith', 'DWARVEN', 'MIDDLE_CLASS');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Brewer', 'DWARVEN', 'MIDDLE_CLASS');
-
--- Poor
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Urchin', 'EUROPEAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Beggar', 'EUROPEAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Thief', 'EUROPEAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Alchemist', 'ARABIC', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Street Urchin', 'ARABIC', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Nomad', 'ARABIC', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Guild Artisan', 'SYLVAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Soldier', 'SYLVAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Urchin', 'SYLVAN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Charlatan', 'DWARVEN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Outlander', 'DWARVEN', 'POOR');
-INSERT INTO backgrounds (background_id, ethnicity, status) VALUES ('Sage', 'DWARVEN', 'POOR');

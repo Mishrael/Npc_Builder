@@ -16,7 +16,7 @@ CREATE TABLE names (
 
 CREATE TABLE species (
   species_pk int unsigned NOT NULL AUTO_INCREMENT,
-  species_id enum('HUMAN', 'ELF', 'DWARF', 'HALFING', 'GNOME', 'TIEFLING') NOT NULL,
+  species_id enum('HUMAN', 'ELF', 'DWARF', 'HALFING', 'GNOME', 'TIEFLING', 'HALF_ELF', 'HALF_ORC') NOT NULL,
   description varchar(256),
   PRIMARY KEY (species_pk),
   UNIQUE KEY (species_id)
@@ -33,16 +33,16 @@ CREATE TABLE personalities (
 
 CREATE TABLE professions (
   profession_pk int unsigned NOT NULL AUTO_INCREMENT,
-  profession_id varchar(40) NOT NULL,
-  mastery_level enum('APPRENTICE', 'JOURNEYMAN', 'EXPERT', 'MASTER', 'GRAND_MASTER'),
+  profession_id enum('BLACKSMITH', 'BAKER', 'FARMER', 'FISHERMAN', 'HUNTER', 'TRADER', 'MERCHANT', 
+  'MINER', 'CARPENTER', 'PAINTER', 'POTTER', 'TAILOR', 'CHEF', 'BREWER', 'WEAVER', 'ARTIST', 
+  'MUSICIAN', 'ACTOR', 'DOCTOR', 'PRIEST'),
   PRIMARY KEY (profession_pk)
 );
 
 CREATE TABLE backgrounds (
   background_pk int unsigned NOT NULL AUTO_INCREMENT,
-  background_id varchar(40) NOT NULL,
-  ethnicity enum('EUROPEAN', 'ARABIC', 'SYLVAN', 'DWARVEN'),
-  status enum('WEALTHY', 'MIDDLE_CLASS', 'POOR'),
+  background_id enum('ACOLYTE', 'CRIMINAL', 'FOLK_HERO', 'GUILD_ARTISAN', 'HERMIT', 'NOBLE', 
+  'OUTLANDER', 'SAGE', 'SAILOR', 'SOLDIER'),
   PRIMARY KEY (background_pk)
 );
 

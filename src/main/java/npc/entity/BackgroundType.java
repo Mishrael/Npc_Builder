@@ -1,0 +1,5 @@
+package npc.entity;
+
+public enum BackgroundType {
+ACOLYTE, CRIMINAL, FOLK_HERO, GUILD_ARTISAN, HERMIT, NOBLE, OUTLANDER, SAGE, SAILOR, SOLDIER
+}
