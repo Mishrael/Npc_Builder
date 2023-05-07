@@ -9,18 +9,27 @@ import npc.entity.Profession;
 import npc.entity.Species;
 
 public interface NpcDao {
-  Npc saveRandomNPC(Name name, Species species, Personality personality, 
-      Background background, List<Profession> professions);
+//  Npc createRandomNPC(Name name, Species species, Personality personality, 
+//      Background background, List<Profession> professions);
+//  
+//  Name fetchRandomName();
+//  Species fetchRandomSpecies();
+//  Personality fetchRandomPersonality();
+//  Background fetchRandomBackground();
+//  List<Profession> fetchRandomProfession();
   
-  Name fetchRandomName();
-  Species fetchRandomSpecies();
-  Personality fetchRandomPersonality();
-  Background fetchRandomBackground();
-  List<Profession> fetchRandomProfession();
+  // GET
+  List<Npc> fetchAllNpcs();
   
-  List<Npc> fetchNpcByPk(int npcPk);
-  
-  Npc updateNpcByPk(int npcPk);
-  
-  Npc deleteNpcByPk(int npcPk);
+  List<Npc> fetchNpcById(int npcId);
+
+  // POST
+  Npc createNpc(Long name, Long species, Long background, Long profession,
+      Long personality);
+
+  // PUT
+  Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession, Long personality);
+
+  void deleteNpc(Long npcId);
+
 }

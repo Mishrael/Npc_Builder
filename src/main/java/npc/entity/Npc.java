@@ -1,26 +1,26 @@
 package npc.entity;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import npc.entity.Npc;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Npc {
-  private Long npcPk;
-  private Name name;
-  private Species species;
-  private Background background;
-  private List<Profession> professions;
-  private Personality personality;
+  private Long npcId;
+  private Long name;
+  private Long species;
+  private Long background;
+  private Long profession;
+  private Long personality;
   
   @JsonIgnore
-  public Long getNpcPk() {
-    return npcPk;
+  public Long getNpcId() {
+    return npcId;
   }
 }

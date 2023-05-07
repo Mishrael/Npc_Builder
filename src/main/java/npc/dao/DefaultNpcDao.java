@@ -5,28 +5,18 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
-import npc.entity.Background;
-import npc.entity.BackgroundType;
-import npc.entity.Name;
-import npc.entity.NameOrigin;
 import npc.entity.Npc;
-import npc.entity.Personality;
-import npc.entity.PersonalityType;
-import npc.entity.Profession;
-import npc.entity.ProfessionType;
-import npc.entity.Species;
-import npc.entity.SpeciesType;
 
-@Service
+@Component
 @Slf4j
 public class DefaultNpcDao implements NpcDao {
 
@@ -37,210 +27,184 @@ public class DefaultNpcDao implements NpcDao {
     String sql;
     MapSqlParameterSource source = new MapSqlParameterSource();
   }
-  
-  private SqlParams generateInsertSql(Profession profession, Background background) {
-    SqlParams params = new SqlParams();
-    
-    // @formatter:off
-    params.sql = ""
-        + "INSERT INTO backgrounds_professions "
-        + "(background_fk, profession_fk) "
-        + "VALUES "
-        + "(:background_fk, :profession_fk)";
-    // @formatter:on
-    
-    params.source.addValue("background_fk", profession.getProfessionPk());
-    params.source.addValue("profession_fk", background.getBackgroundPk());
-    return params;
-  }
-  
-  private SqlParams generateInsertSql(Name name, Species species, Personality personality) {
+
+/*
+ *  GET
+ */
+  @Override
+  public List<Npc> fetchAllNpcs() {
     // @formatter:off
     String sql = ""
-        + "INSERT INTO npcs "
-        + "(name_fk, species_fk, personality_fk) "
-        + "VALUES "
-        + "(:name_fk, :species_fk, :personality_fk)";
-    // @formatter:on
+        + "SELECT * FROM npcs";
+    //@formatter:on
     
-    SqlParams params = new SqlParams();
-    
-    params.sql = sql;
-    params.source.addValue("name_fk", name.getNamePk());
-    params.source.addValue("species_fk", species.getSpeciesPk());
-    params.source.addValue("personality_fk", personality.getPersonalityPk());
-    
-    return params;
-  }
-  
-  private void saveProfession(List<Profession> professions, Background background) {
-    for(Profession profession : professions) {
-      SqlParams params = generateInsertSql(profession, background); 
-      jdbcTemplate.update(params.sql, params.source);
-    }
-  }
-  
-  @Override
-  public Npc saveRandomNPC(Name name, Species species, Personality personality, 
-      Background background, List<Profession> professions) {
-
-    SqlParams params = generateInsertSql(name, species, personality);
-    
-    KeyHolder keyHolder = new GeneratedKeyHolder();
-    jdbcTemplate.update(params.sql, params.source, keyHolder);
-    
-    Long npcPk = keyHolder.getKey().longValue();
-    
-    // @formatter:off
-    return Npc.builder()
-        .npcPk(npcPk)
-        .name(name)
-        .species(species)
-        .personality(personality)
-        .background(background)
-        .professions(professions)
-        .build();
-    // @formatter:on
-  }
-
-  @Override
-  public Name fetchRandomName() {
- // @formatter:off
-    String sql = "SELECT * "
-        + "FROM name "
-        + "ORDER BY RAND() "
-        + "LIMIT 1";
-    // @formatter:on
-    
-    return (Name) jdbcTemplate.query(sql, new RowMapper<>() {
+    return jdbcTemplate.query(sql, new RowMapper<Npc>() {
       
-      public Name mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return Name.builder()
-            .nameId(rs.getString("name_id"))
-            .namePk(rs.getLong("name_pk"))
-            .origin(NameOrigin.valueOf(rs.getString("name_origin")))
-            .build(); 
-      }
-    });
-  }
-
-  @Override
-  public Species fetchRandomSpecies() {
-    // @formatter:off
-       String sql = "SELECT * "
-           + "FROM species "
-           + "ORDER BY RAND() "
-           + "LIMIT 1";
-       // @formatter:on
-       
-       return (Species) jdbcTemplate.query(sql, new RowMapper<>() {
-         
-         public Species mapRow(ResultSet rs, int rowNum) throws SQLException {
-           return Species.builder()
-               .speciesPk(rs.getLong("species_pk"))
-               .speciesId(SpeciesType.valueOf(rs.getString("species_id")))
-               .description(rs.getString("description"))
-               .build(); 
-         }
-       });
-  }
-
-  @Override
-  public Personality fetchRandomPersonality() {
- // @formatter:off
-    String sql = "SELECT * "
-        + "FROM personalities "
-        + "ORDER BY RAND() "
-        + "LIMIT 1";
-    // @formatter:on
-    
-    return (Personality) jdbcTemplate.query(sql, new RowMapper<>() {
-      
-      public Personality mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return Personality.builder()
-            .personalityPk(rs.getLong("background_pk"))
-            .personalityId(PersonalityType.valueOf(rs.getString("personality_id")))
-            .traits(rs.getString("traits"))
-            .description(rs.getString("description"))
-            .build(); 
-      }
-    });
-  }
-
-  @Override
-  public Background fetchRandomBackground() {
-    // @formatter:off
-    String sql = "SELECT * "
-        + "FROM backgrounds "
-        + "ORDER BY RAND() "
-        + "LIMIT 1";
-    // @formatter:on
-    
-    return (Background) jdbcTemplate.query(sql, new RowMapper<>() {
-      
-      public Background mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return Background.builder()
-            .backgroundPk(rs.getLong("background_pk"))
-            .backgroundId(BackgroundType.valueOf(rs.getString("background_id")))
-            .build(); 
-      }
-    });
-  }
-
-  @Override
-  public List<Profession> fetchRandomProfession() {
-    log.info("DAO: fetching a random profession");
-    // @formatter:off
-    String sql = "SELECT * FROM ( "
-        + "(SELECT * FROM professions ORDER BY RAND() LIMIT 1) "
-        + "UNION "
-        + "(SELECT * FROM professions ORDER BY RAND() LIMIT 1) "
-        + ") AS combined_result "
-        + "ORDER BY RAND() LIMIT 2; ";
-    // @formatter:on
-    
-    return jdbcTemplate.query(sql, new RowMapper<>() {
-      
-      public Profession mapRow(ResultSet rs, int rowNum) throws SQLException {
+      public Npc mapRow(ResultSet rs, int rowNum) throws SQLException {
+        
         // @formatter:off
-        return Profession.builder()
-            .professionPk(rs.getLong("profession_pk"))
-            .professionId(ProfessionType.valueOf(rs.getString("profession_id")))
+        return Npc.builder()
+            .name(rs.getLong("name_fk"))
+            .species(rs.getLong("species_fk"))
+            .personality(rs.getLong("personality_fk"))
+            .background(rs.getLong("background_fk"))
+            .profession(rs.getLong("profession_fk"))
             .build();
-        // @formatter:on
       }
-      });
+    });
   }
-
+//@Override
+//public List<Npc> fetchAllNpcs() {
+//  // @formatter:off
+//  String sql = ""
+//      + "SELECT * FROM npcs";
+//  //@formatter:on
+//  
+//  return jdbcTemplate.query(sql, new RowMapper<Npc>() {
+//    
+//    public Npc mapRow(ResultSet rs, int rowNum) throws SQLException {
+//      
+//      // @formatter:off
+//      return Npc.builder()
+//          .name(rs.getString("name_fk"))
+//          .species(SpeciesType.valueOf(rs.getString("species_fk")))
+//          .personality(PersonalityType.valueOf(rs.getString("personality_fk")))
+//          .background(BackgroundType.valueOf(rs.getString("background_fk")))
+//          .profession(ProfessionType.valueOf(rs.getString("profession_fk")))
+//          .build();
+//    }
+//  });
+//}
+//  private Long npcPk;
+//  private Name name;
+//  private Species species;
+//  private Background background;
+//  private List<Profession> professions;
+//  private Personality personality;
+  
   @Override
-  public List<Npc> fetchNpcByPk(int npcPk) {
+  public List<Npc> fetchNpcById(int npcId) {
+    // @formatter:off
     String sql = ""
         + "SELECT * "
         + "From npcs "
-        + "Where npc_pk = :npc_pk";
+        + "Where npc_id = :npc_id";
+    // @formatter:on
     
     Map<String, Object> params = new HashMap<>();
-    params.put("npc_pk", npcPk);
+    params.put("npc_id", npcId);
     
     return jdbcTemplate.query(sql, params, new RowMapper<>() {
       public Npc mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Npc.builder()
-            .npcPk(rs.getLong(npcPk))
+            .npcId(rs.getLong(npcId))
+            .name(rs.getLong("name_fk"))
+            .species(rs.getLong("species_fk"))
+            .personality(rs.getLong("personality_fk"))
+            .background(rs.getLong("background_fk"))
+            .profession(rs.getLong("profession_fk"))
             .build();
       }
     });
   }
 
+/*
+ * POST
+ */
   @Override
-  public Npc updateNpcByPk(int npcPk) {
-    // TODO Auto-generated method stub
-    return null;
+  public Npc createNpc(Long name, Long species, Long background, Long profession,
+      Long personality) {
+    SqlParams params = new SqlParams();
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    
+    //@formatter:off
+    params.sql= ""
+        +"INSERT INTO npcs "
+        +"(name_fk, species_fk, personality_fk, background_fk, profession_fk) "
+        +"VALUES (:name_fk, :species_fk, :personality_fk, :background_fk, :profession_fk)";
+    //@formatter:on
+    
+    params.source.addValue("name_fk", name);
+    params.source.addValue("species_fk", species);
+    params.source.addValue("personality_fk", personality);
+    params.source.addValue("background_fk", background);
+    params.source.addValue("profession_fk", profession);
+    
+    jdbcTemplate.update(params.sql, params.source, keyHolder);
+    
+    long npcId = keyHolder.getKey().intValue();
+    
+    // @formatter:off
+    return Npc.builder()
+        .npcId(npcId)
+        .name(name)
+        .species(species)
+        .personality(personality)
+        .background(background)
+        .profession(profession)
+        .build();
+    // @formatter:on
   }
 
+  /*
+   * PUT
+   */
   @Override
-  public Npc deleteNpcByPk(int npcPk) {
-    // TODO Auto-generated method stub
-    return null;
+  public Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession, 
+      Long personality) {
+      //@formatter:off
+        String sql = ""
+            +"UPDATE npcs "
+            +"SET "
+            +"name_fk = :name_fk, "
+            +"species_fk = :species_fk, "
+            +"background_fk = :background_fk, "
+            +"profession_fk = :profession_fk, "
+            +"personality_fk = :personality_fk "
+            +"WHERE npc_id = :npc_id";
+        //@formatter:on
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("npc_id", npcId);
+        params.put("personality_fk", personality);
+        params.put("profession_fk", profession);
+        params.put("background_fk", background);
+        params.put("species_fk", species);
+        params.put("name_fk", name);
+        
+        if(jdbcTemplate.update(sql, params) == 0) {
+          throw new NoSuchElementException("Could not update npc");
+        }
+        
+     // @formatter:off
+        return Npc.builder()
+            .npcId(npcId)
+            .name(name)
+            .species(species)
+            .personality(personality)
+            .background(background)
+            .profession(profession)
+            .build();
+    // @formatter:on
+  }
+  
+  /*
+   * DELETE
+   */
+  @Override
+  public void deleteNpc(Long npcId) {
+    // @formatter:off
+    String sql = ""
+        + "DELETE FROM npcs "
+        + "Where npc_id = :npc_id";
+    // @formatter:on
+    
+    Map<String, Object> params = new HashMap<>();
+    params.put("npc_id", npcId);
+    
+    if(jdbcTemplate.update(sql, params) == 0) {
+      throw new NoSuchElementException("Could not delete npc");
+    }
   }
 
 }

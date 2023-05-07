@@ -55,14 +55,16 @@ CREATE TABLE backgrounds_professions (
 );
 
 CREATE TABLE npcs (
-  npc_pk int unsigned NOT NULL AUTO_INCREMENT,
+  npc_id int unsigned NOT NULL AUTO_INCREMENT,
   name_fk int unsigned NOT NULL,
   species_fk int unsigned NOT NULL,
   personality_fk int unsigned NOT NULL,
   background_fk int unsigned NOT NULL,
-  PRIMARY KEY (npc_pk),
+  profession_fk int unsigned NOT NULL,
+  PRIMARY KEY (npc_id),
   FOREIGN KEY (name_fk) REFERENCES names (name_pk) ON DELETE CASCADE,
   FOREIGN KEY (species_fk) REFERENCES species (species_pk) ON DELETE CASCADE,
   FOREIGN KEY (personality_fk) REFERENCES personalities (personality_pk) ON DELETE CASCADE,
-  FOREIGN KEY (background_fk) REFERENCES backgrounds (background_pk) ON DELETE CASCADE
+  FOREIGN KEY (background_fk) REFERENCES backgrounds (background_pk) ON DELETE CASCADE,
+  FOREIGN KEY (profession_fk) REFERENCES professions (profession_pk) ON DELETE CASCADE
 );

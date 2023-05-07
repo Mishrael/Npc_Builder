@@ -1,7 +1,10 @@
 package npc.dao;
 
+import java.util.List;
 import npc.entity.Name;
 
 public interface NameDao {
-  Name fetchRandomName();
+
+  List<Name> fetchAllNames();
+
 }
