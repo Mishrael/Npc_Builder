@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class Profession {
-private Long professionPk;
+private Integer professionPk;
 private ProfessionType professionId;
 }

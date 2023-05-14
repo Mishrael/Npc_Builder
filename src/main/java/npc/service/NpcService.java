@@ -10,14 +10,22 @@ public interface NpcService {
   
   List<Npc> fetchNpcById(int npcId);
   
-  Npc createNpc(Long name, Long species, Long background, Long profession,
-      Long personality);
+//switching to int to see if that's my problem
+//  Npc createNpc(Long npcId, Long name, Long species, Long background, Long profession,
+//      Long personality);
+//taking out the npcId to see if the KeyHolder will work to fill it in.
+//  Npc createNpc(Integer npcId, Integer name, Integer species, Integer background,
+//      Integer profession, Integer personality);
+  //Testing whether the KeyHolder will generate the npcId for me.
+  Npc createNpc(Integer name, Integer species, Integer background,
+      Integer profession, Integer personality);
+  
+//  Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession,
+//      Long personality);
+  Npc updateNpc(Integer npcId, Integer name, Integer species, Integer background,
+      Integer profession, Integer personality);
 
-  Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession,
-      Long personality);
-
-  void deleteNpc(Long npcId);
-
+  Npc deleteNpc(Integer npcId);
 
  
 }

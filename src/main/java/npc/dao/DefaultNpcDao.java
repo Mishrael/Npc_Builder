@@ -1,5 +1,6 @@
 package npc.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -14,7 +15,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
+import npc.entity.Background;
+import npc.entity.Name;
 import npc.entity.Npc;
+import npc.entity.Personality;
+import npc.entity.Profession;
+import npc.entity.Species;
 
 @Component
 @Slf4j
@@ -27,6 +33,29 @@ public class DefaultNpcDao implements NpcDao {
     String sql;
     MapSqlParameterSource source = new MapSqlParameterSource();
   }
+  
+  // Maybe a generateInsertSql method to inject values into my C, U, and D ops? 
+  // How do I feed values through to my tables??
+//  private SqlParams generateInsertSql(Long name, Long species, Long background,
+//      Long profession, Long personality) {
+//    // @formatter:off
+//    String sql = ""
+//        +"INSERT INTO npcs "
+//        +"(name_fk, species_fk, personality_fk, background_fk, profession_fk) "
+//        +"VALUES (:name_fk, :species_fk, :personality_fk, :background_fk, :profession_fk)";
+//    // @formatter:on
+//    
+//    SqlParams params = new SqlParams();
+//    
+//    params.sql = sql;
+//    params.source.addValue("name_fk", name.getLong(sql));
+//    params.source.addValue("species_fk", species.getLong(sql));
+//    params.source.addValue("personality_fk", personality.getLong(sql));
+//    params.source.addValue("background_fk", background.getLong(sql));
+//    params.source.addValue("profession_fk", profession.getLong(sql));
+//    
+//    return params;
+//  }
 
 /*
  *  GET
@@ -44,15 +73,17 @@ public class DefaultNpcDao implements NpcDao {
         
         // @formatter:off
         return Npc.builder()
-            .name(rs.getLong("name_fk"))
-            .species(rs.getLong("species_fk"))
-            .personality(rs.getLong("personality_fk"))
-            .background(rs.getLong("background_fk"))
-            .profession(rs.getLong("profession_fk"))
+            .npcId(rs.getInt("npc_id"))
+            .name(rs.getInt("name_fk"))
+            .species(rs.getInt("species_fk"))
+            .personality(rs.getInt("personality_fk"))
+            .background(rs.getInt("background_fk"))
+            .profession(rs.getInt("profession_fk"))
             .build();
       }
     });
   }
+  // What I'd like to eventually do, but due to my tables, I have to pass through Longs.
 //@Override
 //public List<Npc> fetchAllNpcs() {
 //  // @formatter:off
@@ -75,6 +106,7 @@ public class DefaultNpcDao implements NpcDao {
 //    }
 //  });
 //}
+    // Trying different stuff to make things work.
 //  private Long npcPk;
 //  private Name name;
 //  private Species species;
@@ -87,7 +119,8 @@ public class DefaultNpcDao implements NpcDao {
     // @formatter:off
     String sql = ""
         + "SELECT * "
-        + "From npcs "
+//        + "FROM npcs";
+        + "FROM npcs "
         + "Where npc_id = :npc_id";
     // @formatter:on
     
@@ -97,12 +130,12 @@ public class DefaultNpcDao implements NpcDao {
     return jdbcTemplate.query(sql, params, new RowMapper<>() {
       public Npc mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Npc.builder()
-            .npcId(rs.getLong(npcId))
-            .name(rs.getLong("name_fk"))
-            .species(rs.getLong("species_fk"))
-            .personality(rs.getLong("personality_fk"))
-            .background(rs.getLong("background_fk"))
-            .profession(rs.getLong("profession_fk"))
+            .npcId(rs.getInt(npcId))
+            .name(rs.getInt("name_fk"))
+            .species(rs.getInt("species_fk"))
+            .personality(rs.getInt("personality_fk"))
+            .background(rs.getInt("background_fk"))
+            .profession(rs.getInt("profession_fk"))
             .build();
       }
     });
@@ -112,18 +145,41 @@ public class DefaultNpcDao implements NpcDao {
  * POST
  */
   @Override
-  public Npc createNpc(Long name, Long species, Long background, Long profession,
-      Long personality) {
+    //switching to int to see if that's my problem
+//  public Npc createNpc(Long npcId, Long name, Long species, Long background, Long profession,
+//      Long personality) {
+    //taking out the npcId to see if the KeyHolder will work to fill it in.
+//  public Npc createNpc(Integer npcId, Integer name, Integer species, Integer background,
+//      Integer profession, Integer personality) {
+    //Testing whether the KeyHolder will generate the npcId for me.
+  public Npc createNpc(Integer name, Integer species, Integer background,
+      Integer profession, Integer personality) {
     SqlParams params = new SqlParams();
+//   Don't think generateInsertSql is the move. Well at least this one.
+//    SqlParams params = generateInsertSql(name, species, background, profession, personality);
     KeyHolder keyHolder = new GeneratedKeyHolder();
     
-    //@formatter:off
+    // name_fk is getting passed a null value
+    // maybe try without SqlParams object?
+    // @formatter:off
     params.sql= ""
         +"INSERT INTO npcs "
         +"(name_fk, species_fk, personality_fk, background_fk, profession_fk) "
         +"VALUES (:name_fk, :species_fk, :personality_fk, :background_fk, :profession_fk)";
-    //@formatter:on
+    // @formatter:on
+//    // @formatter:off
+//      String sql= ""
+//        +"INSERT INTO npcs "
+//        +"(name_fk, species_fk, personality_fk, background_fk, profession_fk) "
+//        +"VALUES (:name_fk, :species_fk, :personality_fk, :background_fk, :profession_fk)";
+//    // @formatter:on
     
+//    Map<String, Object> params = new HashMap<>();
+//    params.put("name_fk", name);
+//    params.put("species_fk", species);
+//    params.put("personality_fk", personality);
+//    params.put("background_fk", background);
+//    params.put("profession_fk", profession);
     params.source.addValue("name_fk", name);
     params.source.addValue("species_fk", species);
     params.source.addValue("personality_fk", personality);
@@ -131,8 +187,9 @@ public class DefaultNpcDao implements NpcDao {
     params.source.addValue("profession_fk", profession);
     
     jdbcTemplate.update(params.sql, params.source, keyHolder);
+//    jdbcTemplate.update(sql, params);
     
-    long npcId = keyHolder.getKey().intValue();
+    int npcId = keyHolder.getKey().intValue();
     
     // @formatter:off
     return Npc.builder()
@@ -150,8 +207,8 @@ public class DefaultNpcDao implements NpcDao {
    * PUT
    */
   @Override
-  public Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession, 
-      Long personality) {
+  public Npc updateNpc(Integer npcId, Integer name, Integer species, Integer background, 
+      Integer profession, Integer personality) {
       //@formatter:off
         String sql = ""
             +"UPDATE npcs "
@@ -192,11 +249,11 @@ public class DefaultNpcDao implements NpcDao {
    * DELETE
    */
   @Override
-  public void deleteNpc(Long npcId) {
+  public Npc deleteNpc(Integer npcId) {
     // @formatter:off
     String sql = ""
         + "DELETE FROM npcs "
-        + "Where npc_id = :npc_id";
+        + "WHERE npc_id = :npc_id";
     // @formatter:on
     
     Map<String, Object> params = new HashMap<>();
@@ -205,6 +262,9 @@ public class DefaultNpcDao implements NpcDao {
     if(jdbcTemplate.update(sql, params) == 0) {
       throw new NoSuchElementException("Could not delete npc");
     }
+    jdbcTemplate.update(sql, params);
+    
+    return Npc.builder().npcId(npcId).build();
   }
 
 }

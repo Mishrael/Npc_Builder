@@ -29,7 +29,7 @@ public class DefaultBackgroundDao implements BackgroundDao {
         
         // @formatter:off
         return Background.builder()
-            .backgroundPk(rs.getLong("background_pk"))
+            .backgroundPk(rs.getInt("background_pk"))
             .backgroundId(BackgroundType.valueOf(rs.getString("background_id")))
             .build();
       }

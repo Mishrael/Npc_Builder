@@ -12,15 +12,27 @@ import npc.entity.Npc;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Npc {
-  private Long npcId;
-  private Long name;
-  private Long species;
-  private Long background;
-  private Long profession;
-  private Long personality;
+  private Integer npcId;
+  private Integer name;
+  private Integer species;
+  private Integer background;
+  private Integer profession;
+  private Integer personality;
+  
+//  private Long npcId;
+//  private Long name;
+//  private Long species;
+//  private Long background;
+//  private Long profession;
+//  private Long personality;
   
   @JsonIgnore
-  public Long getNpcId() {
+  public Integer getNpcId() {
     return npcId;
   }
+  
+//  @JsonIgnore
+//  public Long getNpcId() {
+//    return npcId;
+//  }
 }

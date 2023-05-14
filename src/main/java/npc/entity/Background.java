@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Background {
-  private Long backgroundPk;
+  private Integer backgroundPk;
   private BackgroundType backgroundId;
   private List<Profession> professions;
 }

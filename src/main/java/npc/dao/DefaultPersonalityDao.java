@@ -29,7 +29,7 @@ public class DefaultPersonalityDao implements PersonalityDao {
         
         // @formatter:off
         return Personality.builder()
-            .personalityPk(rs.getLong("personality_pk"))
+            .personalityPk(rs.getInt("personality_pk"))
             .personalityId(PersonalityType.valueOf(rs.getString("personality_id")))
             .traits(rs.getString("traits"))
             .description(rs.getString("description"))

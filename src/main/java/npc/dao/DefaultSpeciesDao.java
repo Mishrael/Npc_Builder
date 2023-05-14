@@ -31,7 +31,7 @@ public class DefaultSpeciesDao implements SpeciesDao {
         
         // @formatter:off
         return Species.builder()
-            .speciesPk(rs.getLong("species_pk"))
+            .speciesPk(rs.getInt("species_pk"))
             .speciesId(SpeciesType.valueOf(rs.getString("species_id")))
             .description(rs.getString("description"))
             .build();

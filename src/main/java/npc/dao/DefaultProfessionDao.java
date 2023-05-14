@@ -29,7 +29,7 @@ public class DefaultProfessionDao implements ProfessionDao{
         
         // @formatter:off
         return Profession.builder()
-            .professionPk(rs.getLong("profession_pk"))
+            .professionPk(rs.getInt("profession_pk"))
             .professionId(ProfessionType.valueOf(rs.getString("profession_id")))
             .build();
       }

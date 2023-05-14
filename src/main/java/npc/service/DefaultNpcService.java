@@ -29,23 +29,42 @@ public class DefaultNpcService implements NpcService{
   }
  
   // POST
+    // Trying with Integer
+//  @Override
+//  public Npc createNpc(Long npcId, Long name, Long species, Long background, Long profession,
+//      Long personality) {
+//    return npcDao.createNpc(npcId, name, species, background, profession, personality);
+//  }
+  
   @Override
-  public Npc createNpc(Long name, Long species, Long background, Long profession,
-      Long personality) {
-    return npcDao.createNpc( name, species, background, profession, personality);
+//switching to int to see if that's my problem
+//  public Npc createNpc(Integer npcId, Integer name, Integer species, Integer background,
+//      Integer profession, Integer personality) {
+  //Testing whether the KeyHolder will generate the npcId for me.
+  public Npc createNpc(Integer name, Integer species, Integer background,
+      Integer profession, Integer personality) {
+    // TODO Auto-generated method stub
+//    return npcDao.createNpc(npcId, name, species, background, profession, personality);
+    return npcDao.createNpc(name, species, background, profession, personality);
   }
 
   // PUT
+//  @Override
+//  public Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession,
+//      Long personality) {
+//    return npcDao.updateNpc(npcId, name, species, background, profession, personality);
+//  }
   @Override
-  public Npc updateNpc(Long npcId, Long name, Long species, Long background, Long profession,
-      Long personality) {
+  public Npc updateNpc(Integer npcId, Integer name, Integer species, Integer background,
+      Integer profession, Integer personality) {
     return npcDao.updateNpc(npcId, name, species, background, profession, personality);
   }
 
   // DELETE
   @Override
-  public void deleteNpc(Long npcId) {
-    npcDao.deleteNpc(npcId);
+  public Npc deleteNpc(Integer npcId) {
+    return npcDao.deleteNpc(npcId);
   }
+
 
 }

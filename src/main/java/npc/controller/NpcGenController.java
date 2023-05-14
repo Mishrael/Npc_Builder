@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -120,18 +121,57 @@ public interface NpcGenController {
               responseCode = "500", 
               description = "An unplanned error occurred", 
               content = @Content(mediaType = "application/json"))
-      } //,
-//      parameters = {
+      },
+      parameters = {
 //          @Parameter(
-//              name = "name",
+//              name = "npcId",
 //              allowEmptyValue = false,
 //              required = false,
-//              description = "Npc name")
-//      }
+//              description = "Npc ID"),
+          @Parameter(
+              name = "name",
+              allowEmptyValue = false,
+              required = false,
+              description = "Npc name"),
+          @Parameter(
+              name = "species",
+              allowEmptyValue = false,
+              required = false,
+              description = "Npc species"),
+          @Parameter(
+              name = "background",
+              allowEmptyValue = false,
+              required = false,
+              description = "Npc background"),
+          @Parameter(
+              name = "profession",
+              allowEmptyValue = false,
+              required = false,
+              description = "Npc profession"),
+          @Parameter(
+              name = "personality",
+              allowEmptyValue = false,
+              required = false,
+              description = "Npc personality")
+        }
         )
   @PostMapping("/createNpc")
   @ResponseStatus(code = HttpStatus.CREATED)
-  Npc createNpc(@Valid @RequestBody NpcDto npcDto);
+  Npc createNpc(
+//      @RequestParam(required = false) Long npcId,
+//      @RequestParam(required = false) Long name,
+//      @RequestParam(required = false) Long species,
+//      @RequestParam(required = false) Long background,
+//      @RequestParam(required = false) Long profession,
+//      @RequestParam(required = false) Long personality);
+      // Testing whether the KeyHolder will generate the npcId for me.
+//      @RequestParam(required = false) Integer npcId,
+      @RequestParam(required = false) Integer name,
+      @RequestParam(required = false) Integer species,
+      @RequestParam(required = false) Integer background,
+      @RequestParam(required = false) Integer profession,
+      @RequestParam(required = false) Integer personality);
+//  Npc createNpc(@Valid @RequestBody NpcDto npcDto);
 // end of POST
 
 // PUTs an NPC by ID
@@ -157,11 +197,53 @@ public interface NpcGenController {
               responseCode = "500", 
               description = "An unplanned error occurred", 
               content = @Content(mediaType = "application/json"))
+      },
+      parameters = {
+        @Parameter(
+            name = "npcId",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc ID"),
+        @Parameter(
+            name = "name",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc name"),
+        @Parameter(
+            name = "species",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc species"),
+        @Parameter(
+            name = "background",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc background"),
+        @Parameter(
+            name = "profession",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc profession"),
+        @Parameter(
+            name = "personality",
+            allowEmptyValue = false,
+            required = false,
+            description = "Npc personality")
       }
-        )
-  @PutMapping("/updateNpc")
-  @ResponseStatus(code = HttpStatus.OK)
-  Npc updateNpc(@Valid @RequestBody NpcDto npcDto);
+      )
+@PutMapping("/updateNpc")
+@ResponseStatus(code = HttpStatus.OK)
+Npc updateNpc(
+    @RequestParam(required = false) Integer npcId,
+    @RequestParam(required = false) Integer name,
+    @RequestParam(required = false) Integer species,
+    @RequestParam(required = false) Integer background,
+    @RequestParam(required = false) Integer profession,
+    @RequestParam(required = false) Integer personality);
+        
+//  @PutMapping("/updateNpc")
+//  @ResponseStatus(code = HttpStatus.OK)
+//  Npc updateNpc(@Valid @RequestBody NpcDto npcDto);
 // end of PUT
   
 //DELETEs an NPC
@@ -187,11 +269,20 @@ public interface NpcGenController {
              responseCode = "500", 
              description = "An unplanned error occurred", 
              content = @Content(mediaType = "application/json"))
+     },
+         parameters = {
+             @Parameter(
+                 name = "npcId",
+                 allowEmptyValue = false,
+                 required = false,
+                 description = "Npc ID")
      }
+     
        )
    @DeleteMapping("/deleteNpc")
    @ResponseStatus(code = HttpStatus.OK)
-   void deleteNpc(@Valid @RequestBody NpcDto npcDto);
+   Npc deleteNpc(@RequestParam(required = false) Integer npcId);
+//   void deleteNpc(@Valid @RequestBody NpcDto npcDto);
 // end of DELETE
 
 
